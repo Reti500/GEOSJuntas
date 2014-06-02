@@ -1,4 +1,18 @@
 GEOSJuntas::Application.routes.draw do
+
+  get "sessions/create"
+  get "sessions/destroy"
+  # get "/*" => redirect("/#home")
+
+  get "/login" => redirect("/#login")
+  # API
+  scope 'api', defaults: { format: :json } do
+    resources :sessions, only: [:create, :destroy]
+  end
+
+  root "home#index"
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

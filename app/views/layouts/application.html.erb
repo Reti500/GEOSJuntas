@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="App">
 <head>
   <title>GEOSJuntas</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
@@ -8,7 +8,13 @@
 </head>
 <body>
 
-<%= yield %>
+<div ng-controller="SessionCtrl">
+	<button class="pull-rigth btn btn-danger" ng-click="logout()">Salir</button>
+</div>
+
+<div ng-view>
+	<%= yield %>
+</div>
 
 </body>
 </html>
