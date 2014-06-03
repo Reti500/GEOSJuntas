@@ -4,6 +4,7 @@
 	$routeProvider
 		.when("/home", {templateUrl: "../templates/home/index.html", controller: 'HomeCtrl'})
 		.when("/login", {templateUrl: "../templates/sessions/login.html", controller: 'SessionCtrl'})
+		.when("/eventos", {templateUrl: "../templates/eventos/index.html", controller: 'EventosCtrl'})
 ])
 
 @app.config(['$httpProvider', ($httpProvider) -> 
