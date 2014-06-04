@@ -23,11 +23,14 @@
 
 	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	    	<ul class="nav navbar-nav">
+	    		<li><%= link_to 'Eventos', "/eventos" %></li>
+	    	</ul>
 	      <ul class="nav navbar-nav navbar-right">
 	      	<% if current_user %>
-	        	<li><%= link_to 'Salir', root_url %></li>
+	        	<li><%= link_to 'Salir', :logout %></li>
 	        <% else %>
-	        	<li><%= link_to 'Login', root_url %></li>
+	        	<li><%= link_to 'Login', :login %></li>
 	        <% end %>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->

@@ -2,12 +2,15 @@ GEOSJuntas::Application.routes.draw do
 
   # get "/*" => redirect("/#home")
 
-  get "/login" => redirect("/#login")
-  get "/eventos" => redirect("/#eventos")
+  get "/login" => redirect("/#/login"), as: :login
+  get "/logout" => "sessions#destroy", as: :logout
+  get "/eventos" => redirect("/#/eventos")
+  get "/eventos/*path" => redirect("/#/eventos/%{path}")
   
   # API
   scope 'api', defaults: { format: :json } do
     resources :sessions, only: [:create, :destroy]
+    resources :eventos
   end
 
   root "home#index"

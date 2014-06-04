@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
   def destroy
   	logout
   	respond_to do |format|
-  		format.html {}
+  		format.html { redirect_to root_url }
   		format.json { render json: {state: "Logout"} }
   	end
   end

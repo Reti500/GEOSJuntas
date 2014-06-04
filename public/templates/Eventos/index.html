@@ -1,26 +1,37 @@
-<div class="row">
-  <div class="col-md-8 col-md-push-2">
-    <div class="thumbnail">
-      <img data-src="holder.js/300x200" alt="...">
-      <div class="caption">
-        <h3>Thumbnail label</h3>
-        <p>...</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="row">
-	<div class="col-md-8 col-md-push-2">
-		<div ng-repeat="(key, list) in lists">
-			<div class="thumbnail">
-				<img data-src="holder.js/300x200" alt="...">
-				<div class="caption">
-					<h3>Thumbnail label</h3>
-					<p>...</p>
-					<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+<div class="row" ng-init="init()">
+	<div class="col-md-10 col-md-push-1">
+		<div class="row">
+			<div class="col-md-2">
+				<div class="thumbnail" ng-click="nuevo()">
+					<img src="/assets/add.png">
+					<div class="caption">
+						<h3>Nuevo Evento</h3>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-10">
+				<div ng-repeat="list in lista_eventos">
+					<div class="row">
+						<div class="col-md-4" ng-repeat="(key,item) in list">
+							<div class="thumbnail" ng-click="dialog(item)">
+								<div class="caption">
+									<span class="date">
+										<span class="month">{{item.mes}}</span>
+										<span class="day">{{item.dia}}</span>
+									</span>
+									<h3>{{item.titulo}}</h3>
+									<h5 class="ellipsis">{{item.descripcion}}</h5>
+									<h6>
+										{{item.hora}} 
+										<span class="pull-right">
+											Falta: {{dia_f}} dias {{horas_f}} horas {{minutos_f}} minutos
+										</span>
+									</h6>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
