@@ -2,7 +2,7 @@
 	<div class="col-md-10 col-md-push-1">
 		<div class="row">
 			<div class="col-md-2">
-				<div class="thumbnail" ng-click="nuevo()">
+				<div class="thumbnail" ng-click="dialog_new()">
 					<img src="/assets/add.png">
 					<div class="caption">
 						<h3>Nuevo Evento</h3>
@@ -14,7 +14,7 @@
 				<div ng-repeat="list in lista_eventos">
 					<div class="row">
 						<div class="col-md-4" ng-repeat="(key,item) in list">
-							<div class="thumbnail" ng-click="dialog(item)">
+							<div class="thumbnail" ng-click="dialog_show(item)">
 								<div class="caption">
 									<span class="date">
 										<span class="month">{{item.mes}}</span>
@@ -25,7 +25,7 @@
 									<h6>
 										{{item.hora}} 
 										<span class="pull-right">
-											Falta: {{dia_f}} dias {{horas_f}} horas {{minutos_f}} minutos
+											Falta: {{}} dias {{horas_f}} horas {{minutos_f}} minutos
 										</span>
 									</h6>
 								</div>

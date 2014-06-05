@@ -2,7 +2,8 @@
 	return $resource('./api/sessions/:id', { },
 		{
 			'create':  { method: 'POST' },
-			'destroy': { method: 'DELETE' }
+			'destroy': { method: 'DELETE' },
+			'index':   { method: 'GET' }
 		}
 	)
 ])

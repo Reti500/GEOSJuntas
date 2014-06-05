@@ -1,5 +1,12 @@
 GEOSJuntas::Application.routes.draw do
 
+  get "comentarios/index"
+  get "comentarios/show"
+  get "comentarios/new"
+  get "comentarios/create"
+  get "comentarios/edit"
+  get "comentarios/update"
+  get "comentarios/destroy"
   # get "/*" => redirect("/#home")
 
   get "/login" => redirect("/#/login"), as: :login
@@ -11,6 +18,7 @@ GEOSJuntas::Application.routes.draw do
   scope 'api', defaults: { format: :json } do
     resources :sessions, only: [:create, :destroy]
     resources :eventos
+    resources :comentarios
   end
 
   root "home#index"

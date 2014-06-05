@@ -1,8 +1,8 @@
 @app.controller 'EventosCtrl', ['$scope', '$location', '$modal', '$log', 'Evento', 
 	($scope, $location, $modal, $log, Evento) ->
+		$scope.eventos = []
 		$scope.lista_eventos = []
-		@modalInstance = null+
-		@time = new Date()
+		@modalInstance = null
 
 		$scope.init = () ->
 			Evento.index({}, ($data) ->
@@ -15,12 +15,9 @@
 				$scope.create_list_eventos($scope.eventos)
 			)
 
-		$scope.tiempoFaltante = ($day, $hour, $min) ->
-			
-			$scope.dia_f = @time.getDate() - $day
-
 		$scope.create_list_eventos = ($array) ->
 			num_init = 0
+			$scope.lista_eventos = []
 			list = []
 			for item in $array
 				list.push(item)
@@ -37,7 +34,7 @@
 
 			$scope.opened = true
 
-		$scope.dialog = ($item) ->
+		$scope.dialog_show = ($item) ->
 			$scope.event_show = null
 			$scope.id = $item.id
 			@modalInstance = $modal.open({
@@ -57,4 +54,40 @@
 					$log.info("marica")
 			)
 
+		$scope.dialog_new = () ->
+			$scope.event_show = null
+			@modalInstance = $modal.open({
+				templateUrl: '../templates/eventos/new.html',
+				controller: 'ModalInstanceNewCtrl',
+				size: "lg",
+				resolve: {
+				}
+			})
+
+			@modalInstance.result.then(
+				($newItem) ->
+					$log.info("wey")
+					$scope.eventos.push($newItem)
+					$scope.create_list_eventos($scope.eventos)
+					# $scope.lista_eventos.push($newItem)
+				() ->
+					# $log.error($scope.evento)
+					# $scope.lista_eventos.push($scope.evento)
+			)
 	]
+
+@app.controller 'ModalInstanceNewCtrl', ['$scope', '$modalInstance', '$log', 'Evento', ($scope, $modalInstance, $log, Evento) ->
+
+	$scope.crear = ($evento) ->
+		$scope.evento = new Evento($evento)
+		Evento.create($scope.evento, ($data) ->
+			$log.info($data)
+			$modalInstance.close($data.evento)
+		)
+
+	$scope.open_calendar = ($event) ->
+		$event.preventDefault()
+		$event.stopPropagation()
+
+		$scope.opened = true;
+]

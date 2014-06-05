@@ -52,3 +52,11 @@
 	font-size: 11px;
 	color: #666;
 }
+
+.comment {
+	font-weight: bold;
+}
+
+.comment span {
+	font-weight: normal;
+}

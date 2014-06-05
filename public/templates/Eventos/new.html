@@ -1,1 +1,23 @@
-wey
+<p></p>
+
+<div class="row">
+	<div class="col-md-10 col-md-push-1">
+		<form name="newEvento" class="" role="form"  ng-submit="crear(form)" novalidate>
+			<div class="form-group" ng-class="{ 'has-error' : newEvento.titulo.$invalid && !newEvento.titulo.$pristine }">
+				<input type="text" name="titulo" ng-model="form.titulo" class="form-control" placeholder="Titulo" required />
+			</div>
+
+			<div class="form-group" ng-class="{ 'has-error' : newEvento.descripcion.$invalid && !newEvento.descripcion.$pristine }">
+				<input type="text-area" name="descripcion" ng-model="form.descripcion" class="form-control" placeholder="Descripcion" required />
+			</div>
+
+			<div class="form-group" ng-class="{ 'has-error' : newEvento.fecha.$invalid && !newEvento.fecha.$pristine }">
+				<input type="text-area" name="fecha" ng-model="form.fecha" class="form-control" placeholder="Fecha" datepicker-popup="{{format}}" is-open="opened" min-date="minDate" date-disabled="disabled(date, mode)" ng-click="open_calendar($event)" required />
+			</div>
+
+			<div class="form-group">
+				<button class="btn btn-success" type="submit" ng-disabled="newComentario.$invalid || isUnchanged(form)">Crear</button>
+			</div>
+		</form>
+	</div>
+</div>

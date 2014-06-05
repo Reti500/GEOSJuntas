@@ -1,5 +1,8 @@
 class EventoSerializer < ActiveModel::Serializer
+
   attributes :id, :titulo, :descripcion, :mes, :dia, :hora
+  has_many :users, embed: :objects
+  has_many :comentarios, embed: :objects
 
   def mes
   	(object.fecha && object.fecha.strftime("%b")) || nil
@@ -10,6 +13,6 @@ class EventoSerializer < ActiveModel::Serializer
   end
 
   def hora
-  	(object.fecha && object.fecha.strftime("%H:%M hrs"))
+  	(object.fecha && object.fecha.strftime("%H:%M hrs")) || nil
   end
 end

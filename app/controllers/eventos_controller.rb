@@ -29,6 +29,21 @@ class EventosController < ApplicationController
   end
 
   def create
+    @evento = Evento.new(evento_params)
+
+    if @evento.save
+      current_user.eventos << @evento
+
+      respond_to do |format|
+        format.html {}
+        format.json { render json: @evento }
+      end
+    else
+      respond_to do |format|
+        format.html {}
+        format.json { render json: { state: "error" } }
+      end
+    end
   end
 
   def destroy
@@ -38,5 +53,9 @@ class EventosController < ApplicationController
 
   def get_evento
     @evento = Evento.find(params[:id])
+  end
+
+  def evento_params
+    params.require(:evento).permit(:titulo, :descripcion, :fecha)
   end
 end
