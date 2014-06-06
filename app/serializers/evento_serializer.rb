@@ -13,6 +13,6 @@ class EventoSerializer < ActiveModel::Serializer
   end
 
   def hora
-  	(object.fecha && object.fecha.strftime("%H:%M hrs")) || nil
+  	(object.hora && object.hora.strftime("%H:%M hrs")) || nil
   end
 end

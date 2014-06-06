@@ -15,6 +15,9 @@
 				$scope.create_list_eventos($scope.eventos)
 			)
 
+		$scope.editar = () ->
+			
+
 		$scope.create_list_eventos = ($array) ->
 			num_init = 0
 			$scope.lista_eventos = []
@@ -77,6 +80,8 @@
 	]
 
 @app.controller 'ModalInstanceNewCtrl', ['$scope', '$modalInstance', '$log', 'Evento', ($scope, $modalInstance, $log, Evento) ->
+	
+	$scope.dt = new Date()
 
 	$scope.crear = ($evento) ->
 		$scope.evento = new Evento($evento)
@@ -86,8 +91,12 @@
 		)
 
 	$scope.open_calendar = ($event) ->
-		$event.preventDefault()
+		# $event.preventDefault()
 		$event.stopPropagation()
 
-		$scope.opened = true;
+		$scope.opened = true
+
+	$scope.disabled = (date, mode) ->
+		$scope.opened = false
+		(mode == 'day' && ( date.getDay() == 0 || date.getDay() == 6 ))
 ]
