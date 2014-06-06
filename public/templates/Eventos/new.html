@@ -18,8 +18,11 @@
 				</div>
 			</div>
 
-			<div class="form-group" ng-class="{ 'has-error' : newEvento.hora.$invalid && !newEvento.hora.$pristine }">
+			<!-- <div class="form-group" ng-class="{ 'has-error' : newEvento.hora.$invalid && !newEvento.hora.$pristine }">
 				<input type="time" name="hora" ng-model="form.hora" class="form-control" placeholder="Hora" required />
+			</div> -->
+			<div class="form-group" ng-class="{ 'has-error' : newEvento.hora.$invalid && !newEvento.hora.$pristine }">
+				<timepicker name="hora" ng-model="form.hora" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
 			</div>
 
 			<div class="form-group">
