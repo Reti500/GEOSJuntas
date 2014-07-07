@@ -4,7 +4,21 @@ class EventosController < ApplicationController
 
   def index
     # @eventos = current_user.eventos.methods
-    @eventos = current_user.eventos
+    @day = params['dia'] || nil
+    @month = params['mes'] || nil
+    @year = (params['year'] || DateTime.now.strftime("%Y")).to_i
+
+    if @day && @month
+      day = DateTime.new(@year, @month.to_i, @day.to_i)
+      puts day
+      @new_e = Evento.where('fecha BETWEEN ? AND ?', day, day+1.days)
+      if @new_e
+        puts "----------------> SI"
+      end
+      @eventos = @new_e
+    else
+      @eventos = current_user.eventos
+    end
 
     respond_to do |format|
       format.html {}

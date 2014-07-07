@@ -13,6 +13,7 @@ GEOSJuntas::Application.routes.draw do
   get "/logout" => "sessions#destroy", as: :logout
   get "/eventos" => redirect("/#/eventos")
   get "/eventos/*path" => redirect("/#/eventos/%{path}")
+  get "/calendario" => redirect("/#/calendario")
   
   # API
   scope 'api', defaults: { format: :json } do

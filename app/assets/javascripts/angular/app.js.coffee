@@ -6,6 +6,7 @@
 		.when("/login", {templateUrl: "../templates/sessions/login.html", controller: 'SessionCtrl'})
 		.when("/eventos", {templateUrl: "../templates/eventos/index.html", controller: 'EventosCtrl'})
 		.when("/eventos/new", {templateUrl: "../templates/eventos/new.html", controller: 'EventosCtrl'})
+		.when("/calendario", {templateUrl: "../templates/calendario/index.html", controller: 'CalendarioCtrl'})
 ])
 
 @app.config(['$httpProvider', ($httpProvider) -> 

@@ -83,12 +83,26 @@
 	
 	$scope.dt = new Date()
 
+	$scope.hstep = 1
+	$scope.mstep = 1
+
+	$scope.ismeridian = false
+
+	$scope.toggleMode = () ->
+		$scope.ismeridian = !$scope.ismeridian
+
 	$scope.crear = ($evento) ->
 		$scope.evento = new Evento($evento)
 		Evento.create($scope.evento, ($data) ->
 			$log.info($data)
 			$modalInstance.close($data.evento)
 		)
+
+	$scope.update = () ->
+    	d = new Date()
+    	d.setHours( 14 )
+    	d.setMinutes( 0 )
+    	$scope.mytime = d
 
 	$scope.open_calendar = ($event) ->
 		# $event.preventDefault()
@@ -99,4 +113,10 @@
 	$scope.disabled = (date, mode) ->
 		$scope.opened = false
 		(mode == 'day' && ( date.getDay() == 0 || date.getDay() == 6 ))
+
+	$scope.changed = () ->
+		
+
+	$scope.clear = () ->
+    	$scope.mytime = null
 ]

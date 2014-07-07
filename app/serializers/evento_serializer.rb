@@ -1,6 +1,6 @@
 class EventoSerializer < ActiveModel::Serializer
 
-  attributes :id, :titulo, :descripcion, :mes, :dia, :hora
+  attributes :id, :titulo, :descripcion, :mes, :dia, :hora, :fecha
   has_many :users, embed: :objects
   has_many :comentarios, embed: :objects
 
