@@ -41,7 +41,7 @@
 			$scope.event_show = null
 			$scope.id = $item.id
 			@modalInstance = $modal.open({
-				templateUrl: '../templates/eventos/show.html',
+				templateUrl: '../templates/otros/show.html',
 				controller: 'ModalInstanceCtrl',
 				size: "lg",
 				resolve: {
@@ -60,7 +60,7 @@
 		$scope.dialog_new = () ->
 			$scope.event_show = null
 			@modalInstance = $modal.open({
-				templateUrl: '../templates/eventos/new.html',
+				templateUrl: '../templates/otros/new.html',
 				controller: 'ModalInstanceNewCtrl',
 				size: "lg",
 				resolve: {
