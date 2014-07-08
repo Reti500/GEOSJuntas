@@ -7,7 +7,7 @@
 		.when("/eventos", {templateUrl: "../templates/eventos/index.html", controller: 'EventosCtrl'})
 		.when("/eventos/new", {templateUrl: "../templates/eventos/new.html", controller: 'EventosCtrl'})
 		.when("/calendario", {templateUrl: "../templates/calendario/index.html", controller: 'CalendarioCtrl'})
-		.when("/otros", {templateUrl: "../templates/otros/index.html", controller: 'HomeCtrl'})
+		.when("/otros", {templateUrl: "../templates/otros/index.html", controller: 'EventosCtrl'})
 ])
 
 @app.config(['$httpProvider', ($httpProvider) -> 
