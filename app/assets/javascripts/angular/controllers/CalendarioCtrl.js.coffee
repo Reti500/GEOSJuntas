@@ -1,16 +1,8 @@
 @app.controller 'CalendarioCtrl', ['$scope', '$log', 'Evento', ($scope, $log, Evento) ->
-    @months = ['enero']
-
     $scope.init = () ->
-        # Evento.index({}, ($data) ->
-        #     if($data.meta == "ok")
-        #         $scope.eventos = $data.eventos
-        #     else if($data.state == "user-error")
-        #         $location.path("/login")
-        #     else
-        #         $scope.eventos = []
-        # )
-        $scope.selectDay()
+        Evento.index({dia:$scope.dt.getDate(), mes:$scope.dt.getMonth()}, ($data) ->
+            $scope.eventos = $data.eventos
+        )
 
     $scope.today = () ->
         $scope.dt = new Date()
@@ -35,7 +27,7 @@
         $scope.opened = true
 
     $scope.selectDay = () ->
-        $log("calculate date")
+        $log.info("calculate date")
         Evento.index({dia:$scope.dt.getDate(), mes:$scope.dt.getMonth()}, ($data) ->
             $scope.eventos = $data.eventos
         )
