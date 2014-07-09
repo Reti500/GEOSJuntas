@@ -1,32 +1,50 @@
-@app.controller 'CalendarioCtrl', ['$scope', '$log', ($scope, $log) ->
-	$scope.today = () ->
-    	$scope.dt = new Date()
+@app.controller 'CalendarioCtrl', ['$scope', '$log', 'Evento', ($scope, $log, Evento) ->
+    @months = ['enero']
 
-  	$scope.today()
+    $scope.init = () ->
+        # Evento.index({}, ($data) ->
+        #     if($data.meta == "ok")
+        #         $scope.eventos = $data.eventos
+        #     else if($data.state == "user-error")
+        #         $location.path("/login")
+        #     else
+        #         $scope.eventos = []
+        # )
+        $scope.selectDay()
 
-  	$scope.clear = () ->
-    	$scope.dt = null
+    $scope.today = () ->
+        $scope.dt = new Date()
 
-  	$scope.disabled = (date, mode) ->
-    	return ( mode == 'day' && ( date.getDay() == 0 || date.getDay() == 6 ) )
+    $scope.today()
 
-  	$scope.toggleMin = () ->
-    	$scope.minDate = $scope.minDate ? null : new Date()
+    $scope.clear = () ->
+        $scope.dt = null
+
+    $scope.disabled = (date, mode) ->
+        return ( mode == 'day' && ( date.getDay() == 0 || date.getDay() == 6 ) )
+
+    $scope.toggleMin = () ->
+        $scope.minDate = $scope.minDate ? null : new Date()
   
-  	$scope.toggleMin()
+    $scope.toggleMin()
 
-  	$scope.open = ($event) ->
-    	$event.preventDefault()
-    	$event.stopPropagation()
+    $scope.open = ($event) ->
+        $event.preventDefault()
+        $event.stopPropagation()
 
-    	$scope.opened = true
+        $scope.opened = true
 
-  	$scope.dateOptions = {
-    	formatYear: 'yy',
-    	startingDay: 1
-  	}
+    $scope.selectDay = () ->
+        Evento.index({dia:$scope.dt.getDate(), mes:$scope.dt.getMonth()}, ($data) ->
+            $scope.eventos = $data.eventos
+        )
 
-	$scope.initDate = new Date('2016-15-20')
-	$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate']
-	$scope.format = $scope.formats[0]
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+    }
+
+    $scope.initDate = new Date('2016-15-20')
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate']
+    $scope.format = $scope.formats[0]
 ]
