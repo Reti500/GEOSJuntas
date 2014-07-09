@@ -12,7 +12,7 @@ class EventosController < ApplicationController
       day = DateTime.new(@year, @month.to_i, @day.to_i)
       puts day
       @new_e = Evento.where('fecha BETWEEN ? AND ?', day, day+1.days)
-      if @new_e
+      if @new_e.length > 0
         puts "----------------> SI"
       end
       @eventos = @new_e
