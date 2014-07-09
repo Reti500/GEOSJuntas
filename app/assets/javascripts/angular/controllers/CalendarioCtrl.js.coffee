@@ -35,6 +35,7 @@
         $scope.opened = true
 
     $scope.selectDay = () ->
+        $log("calculate date")
         Evento.index({dia:$scope.dt.getDate(), mes:$scope.dt.getMonth()}, ($data) ->
             $scope.eventos = $data.eventos
         )
@@ -44,7 +45,7 @@
         startingDay: 1
     }
 
-    $scope.initDate = new Date('2016-15-20')
+    $scope.initDate = new Date()
     $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate']
     $scope.format = $scope.formats[0]
 ]
