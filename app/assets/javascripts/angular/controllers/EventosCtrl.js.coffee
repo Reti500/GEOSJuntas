@@ -1,5 +1,5 @@
-@app.controller 'EventosCtrl', ['$scope', '$location', '$modal', '$log', 'Evento', 
-	($scope, $location, $modal, $log, Evento) ->
+@app.controller 'EventosCtrl', ['$scope', '$location', '$modal', '$log', '$http', 'Evento', 'User',
+	($scope, $location, $modal, $log, $http, Evento, User) ->
 		$scope.eventos = []
 		$scope.lista_eventos = []
 		@modalInstance = null
@@ -8,8 +8,6 @@
 			Evento.index({}, ($data) ->
 				if($data.meta == "ok")
 					$scope.eventos = $data.eventos
-				else if($data.state == "user-error")
-					$location.path("/login")
 				else
 					$scope.eventos = []
 				$scope.create_list_eventos($scope.eventos)
@@ -60,7 +58,7 @@
 		$scope.dialog_new = () ->
 			$scope.event_show = null
 			@modalInstance = $modal.open({
-				templateUrl: '../templates/otros/new.html',
+				templateUrl: '../templates/eventos/new.html',
 				controller: 'ModalInstanceNewCtrl',
 				size: "lg",
 				resolve: {
@@ -79,44 +77,53 @@
 			)
 	]
 
-@app.controller 'ModalInstanceNewCtrl', ['$scope', '$modalInstance', '$log', 'Evento', ($scope, $modalInstance, $log, Evento) ->
+@app.controller 'ModalInstanceNewCtrl', ['$scope', '$modalInstance', '$log', '$q', '$http', 'Evento', 'User', 
+($scope, $modalInstance, $log, $q, $http, Evento, User) ->
+		$scope.tags = []
+		$scope.dt = new Date()
+
+		$scope.hstep = 1
+		$scope.mstep = 1
+
+		$scope.ismeridian = false
+
+		$scope.toggleMode = () ->
+			$scope.ismeridian = !$scope.ismeridian
+
+		$scope.crear = ($evento) ->
+			$scope.evento = new Evento($evento)
+			# if not $scope.evento.hora
+			# 	$scope.evento.hora = $scope.dt
+			$log.info($scope.evento)
+			Evento.create($scope.evento, ($data) ->
+				$log.info($data)
+				$modalInstance.close($data.evento)
+			)
+
+		$scope.update = () ->
+	    	d = new Date()
+	    	d.setHours( 14 )
+	    	d.setMinutes( 0 )
+	    	$scope.mytime = d
+
+		$scope.open_calendar = ($event) ->
+			# $event.preventDefault()
+			$event.stopPropagation()
+
+			$scope.opened = true
+
+		$scope.disabled = (date, mode) ->
+			$scope.opened = false
+			(mode == 'day' && ( date.getDay() == 0 || date.getDay() == 6 ))
+
+		$scope.changed = () ->
+			$log.info("change")
+
+		$scope.clear = () ->
+	    	$scope.mytime = null
 	
-	$scope.dt = new Date()
-
-	$scope.hstep = 1
-	$scope.mstep = 1
-
-	$scope.ismeridian = false
-
-	$scope.toggleMode = () ->
-		$scope.ismeridian = !$scope.ismeridian
-
-	$scope.crear = ($evento) ->
-		$scope.evento = new Evento($evento)
-		Evento.create($scope.evento, ($data) ->
-			$log.info($data)
-			$modalInstance.close($data.evento)
-		)
-
-	$scope.update = () ->
-    	d = new Date()
-    	d.setHours( 14 )
-    	d.setMinutes( 0 )
-    	$scope.mytime = d
-
-	$scope.open_calendar = ($event) ->
-		# $event.preventDefault()
-		$event.stopPropagation()
-
-		$scope.opened = true
-
-	$scope.disabled = (date, mode) ->
-		$scope.opened = false
-		(mode == 'day' && ( date.getDay() == 0 || date.getDay() == 6 ))
-
-	$scope.changed = () ->
-		
-
-	$scope.clear = () ->
-    	$scope.mytime = null
+		$scope.loadTags = (query) ->
+			$log.info(query)
+			$http.get('/users?search=' + query)
+			return $q.when([{text:"hola"}]);
 ]

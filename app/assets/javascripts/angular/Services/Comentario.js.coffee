@@ -1,5 +1,5 @@
 @app.factory("Comentario", ['$resource', ($resource) -> 
-	return $resource('./api/comentarios/:id', { id: "@id" },
+	return $resource('/api/comentarios/:id', { id: "@id" },
 		{
 			'create':  { method: 'POST' },
 			'index':   { method: 'GET', isArray: false},

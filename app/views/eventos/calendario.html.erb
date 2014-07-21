@@ -1,0 +1,36 @@
+<div class="row" ng-controller="CalendarioCtrl">
+	<div class="col-md-10 col-md-push-1" ng-init="init()">
+		<div class="row">
+    		<pre>Dia seleccionado: <em>{{dt | date:'fullDate' }}</em></pre>
+    	</div>
+    
+    	<div class="row">
+    		<h4>Inline</h4>
+    		<div class="col-md-4" style="display:inline-block; min-height:290px;">
+        		<datepicker ng-change="selectDay()" ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
+    		</div>
+			
+			<div class="col-md-8">
+				<!-- <div class="row" ng-repeat="h in horas">
+					<div class="thumbnail" ng-click="dialog_show(item)">
+						<div class="caption">
+							<h3>{{e.titulo}}</h3>
+							<h5 class="ellipsis">{{e.descripcion}}</h5>
+							<h6>
+								{{e.hora}}
+								<span class="pull-right">
+									Falta: {{}} dias {{horas_f}} horas {{minutos_f}} minutos
+								</span>
+							</h6>
+						</div>
+					</div>
+				</div> -->
+				<div class="row">
+					<ul class="list-group">
+						<li class="list-group-item list-group-item-success" ng-repeat="h in horas">{{h}}</li>
+					</ul>
+				</div>	
+			</div>
+    	</div>
+    </div>
+</div>

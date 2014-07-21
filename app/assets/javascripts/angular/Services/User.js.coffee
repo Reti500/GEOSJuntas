@@ -1,5 +1,5 @@
 @app.factory("User", ['$resource', ($resource) -> 
-	return $resource('./api/user/:id', { id: "@id" },
+	return $resource('/users/:id', { id: "@id" },
 		{
 			'create':  { method: 'POST' },
 			'index':   { method: 'GET', isArray: false},

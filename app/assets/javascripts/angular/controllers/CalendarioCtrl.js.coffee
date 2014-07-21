@@ -1,4 +1,6 @@
 @app.controller 'CalendarioCtrl', ['$scope', '$log', 'Evento', ($scope, $log, Evento) ->
+    $scope.horas = [0...24]
+
     $scope.init = () ->
         Evento.index({dia:$scope.dt.getDate(), mes:$scope.dt.getMonth()}, ($data) ->
             $scope.eventos = $data.eventos
@@ -27,8 +29,7 @@
         $scope.opened = true
 
     $scope.selectDay = () ->
-        $log.info("calculate date")
-        Evento.index({dia:$scope.dt.getDate(), mes:$scope.dt.getMonth()}, ($data) ->
+        Evento.index({dia:$scope.dt.getDate(), mes:$scope.dt.getMonth()+1}, ($data) ->
             $scope.eventos = $data.eventos
         )
 

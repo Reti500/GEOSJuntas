@@ -5,6 +5,9 @@ class ApplicationController < ActionController::Base
 
   def not_authenticated
     #render json: { message: "No estas logueado" }
-    render json: { state: "user-error" }
+    respond_to do |format|
+    	format.html { redirect_to :login }
+    	format.json { render json: { state: "user-error" } }
+    end
   end
 end

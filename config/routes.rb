@@ -9,12 +9,20 @@ GEOSJuntas::Application.routes.draw do
   get "comentarios/destroy"
   # get "/*" => redirect("/#home")
 
-  get "/login" => redirect("/#/login"), as: :login
+  # get "/login" => redirect("/#/login"), as: :login
+  # get "/logout" => "sessions#destroy", as: :logout
+  # get "/eventos" => redirect("/#/eventos")
+  # get "/eventos/*path" => redirect("/#/eventos/%{path}")
+  # get "/calendario" => redirect("/#/calendario")
+
+  get "/login" => "sessions#new", as: :login
   get "/logout" => "sessions#destroy", as: :logout
-  get "/eventos" => redirect("/#/eventos")
-  get "/eventos/*path" => redirect("/#/eventos/%{path}")
-  get "/calendario" => redirect("/#/calendario")
+  get "/eventos" => "eventos#index"
+  get "/calendario" => "eventos#calendario"
   
+  resources :eventos
+  resources :users
+
   # API
   scope 'api', defaults: { format: :json } do
     resources :sessions, only: [:create, :destroy]

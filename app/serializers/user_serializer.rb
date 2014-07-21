@@ -1,3 +1,7 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :email
+  attributes :email, :text
+
+  def text
+  	object.email
+  end
 end

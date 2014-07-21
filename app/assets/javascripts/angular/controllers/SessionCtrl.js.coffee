@@ -1,11 +1,11 @@
-@app.controller 'SessionCtrl', ['$scope', '$location', '$log', 'Session', ($scope, $location, $log, Session) ->
+@app.controller 'SessionCtrl', ['$scope', '$location', '$log', '$window', 'Session', ($scope, $location, $log, $window, Session) ->
 	$scope.alerts = []
 
 	$scope.login = (params) ->
 		$scope.session = new Session(params)
 		Session.create($scope.session, ($data) ->
 			if $data.state == "Logged"
-				$location.path("/eventos")
+				$window.location.href = '/';
 			else
 				$scope.addAlert("danger", "Error en los datos")
 				$scope.session = angular.copy({})
