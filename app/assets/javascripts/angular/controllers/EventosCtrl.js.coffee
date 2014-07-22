@@ -79,6 +79,10 @@
 
 @app.controller 'ModalInstanceNewCtrl', ['$scope', '$modalInstance', '$log', '$q', '$http', 'Evento', 'User', 
 ($scope, $modalInstance, $log, $q, $http, Evento, User) ->
+		User.index({}, ($data) ->
+			$scope.users = $data.users
+		)
+
 		$scope.tags = []
 		$scope.dt = new Date()
 
@@ -87,6 +91,8 @@
 
 		$scope.ismeridian = false
 
+		$scope.selection = []
+		
 		$scope.toggleMode = () ->
 			$scope.ismeridian = !$scope.ismeridian
 
@@ -94,11 +100,12 @@
 			$scope.evento = new Evento($evento)
 			# if not $scope.evento.hora
 			# 	$scope.evento.hora = $scope.dt
+			$log.info($evento.invitados)
 			$log.info($scope.evento)
-			Evento.create($scope.evento, ($data) ->
-				$log.info($data)
-				$modalInstance.close($data.evento)
-			)
+			# Evento.create($scope.evento, ($data) ->
+			# 	$log.info($data)
+			# 	$modalInstance.close($data.evento)
+			# )
 
 		$scope.update = () ->
 	    	d = new Date()
@@ -117,13 +124,15 @@
 			(mode == 'day' && ( date.getDay() == 0 || date.getDay() == 6 ))
 
 		$scope.changed = () ->
-			$log.info("change")
+			return true
 
 		$scope.clear = () ->
 	    	$scope.mytime = null
-	
-		$scope.loadTags = (query) ->
-			$log.info(query)
-			$http.get('/users?search=' + query)
-			return $q.when([{text:"hola"}]);
+
+	    $scope.toggleSelection = (email) ->
+	    	@idx = $scope.selection.indexOf(email)
+	    	if @idx > -1
+	    		$scope.selection.splice(@idx, 1)
+	    	else
+	    		$scope.selection.push(email)
 ]

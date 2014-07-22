@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   	if search
   		@users = User.search(search)
   	else
-  		@users = []
+  		@users = User.all
   	end
 
   	render json: @users

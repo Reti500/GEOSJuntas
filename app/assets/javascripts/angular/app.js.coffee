@@ -1,4 +1,4 @@
-@app = angular.module('App', ["ngResource", "ngRoute", "ui.bootstrap", "ngTagsInput"])
+@app = angular.module('App', ["ngResource", "ngRoute", "ui.bootstrap"])
 
 # @app.config(['$routeProvider', ($routeProvider) ->
 # 	$routeProvider
@@ -29,74 +29,13 @@
 # // 	$httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
 # // });
 
-# @app.directive('tag', ($http) ->
-# 	return {
-# 		restrict: 'E',
-# 		templateUrl: 'tag.html',
-# 		link: (scope, el) ->
-# 			scope.tags = [
-# 				{ text: 'Tag1' },
-# 				{ text: 'Tag2' },
-# 				{ text: 'Tag3' }
-# 			]
-
-# 			test = [{ "text": "Tag9" },{ "text": "Tag10" }]
-# 			scope.loadTags = test;
-# 		}
-# )
-
-@app.directive('tag', ($http, $q, User) ->
-	return {
-		restrict: 'E',
-		templateUrl: '../templates/tag.html',
-		link: (scope, el) ->
-			scope.tags = []
-        
-			scope.loadTags = (query) ->
-        		# test = [{ text: 'Tag9' },{ text: 'Tag10' }]
-        		# test = $http.get('/users?search=' + query)
-        		# test = []
-        		# console.log(query)
-        		# User.index({search:query}, ($data) ->
-        		# 	console.log($data)
-        		# 	test = $data.users
-        		# 	console.log(test)
-        		# )
-        		# test = $http.get('/users?search=' + query)
-        		# 	.success(($data)->
-        		# 		console.log($data.users)
-        		# 		return $data.users
-        		# 	)
-        		# console.log(test)
-        		# return test.$promise
-				
-				@deferred = $q.defer()
-				
-				User.get({search:query}, (data) ->
-					@deferred.resolve([
-						{ text: 'Tag9' },
-						{ text: 'Tag10' }
-					])
-				)
-				
-				@deferred.promise
-		}
-)
-
-
-# @app.config((tagsInputConfigProvider) ->
-# 	tagsInputConfigProvider
-# 		.setDefaults('tagsInput', {
-# 			placeholder: 'New tag',
-# 			addOnEnter: false
-# 		})
-# 		.setDefaults('autoComplete', {
-# 			maxResultsToShow: 20,
-# 			debounceDelay: 1000
-# 		})
-# 		.setActiveInterpolation('tagsInput', {
-# 			placeholder: true,
-# 			addOnEnter: true,
-# 			removeTagSymbol: true
-# 		})
-# )
+@app.filter('searchUser', [ () ->
+    return (items, searchText) ->
+        filtered = []
+        searchText = String(searchText).toLowerCase()
+        angular.forEach(items, (item) ->
+            if (item.email.toLowerCase().indexOf(searchText) >= 0)
+            	filtered.push(item)
+        )
+        return filtered
+])

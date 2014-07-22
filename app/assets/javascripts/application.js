@@ -22,4 +22,3 @@
 //= require_tree ./angular
 
 //= require ui-bootstrap-tpls-0.11.0
-//= require ng-tags-input.min
