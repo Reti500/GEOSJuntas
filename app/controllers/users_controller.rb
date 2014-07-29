@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def index
   	search = params[:search] || nil
-  	print("El parametro a buscar es #{search}")
+  	
   	if search
   		@users = User.search(search)
   	else

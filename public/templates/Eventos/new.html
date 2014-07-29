@@ -38,8 +38,8 @@
 
 			    	<ul>
 			      		<li ng-repeat="user in users | searchUser:search">
-						  	<input type="checkbox" name="selectedUsers[]" value="{{user.email}}" checklist-model="form.invitados"
-						  		ng-checked="selection.indexOf(user.email) > -1" ng-click="toggleSelection(user.email)" /> {{user.email}}
+						  	<input type="checkbox" name="selectedUsers[]" value="{{user.email}}" checklist-model="users.invitados"
+						  		ng-checked="selection.indexOf(user.email) > -1" ng-click="toggleSelection(user.email)" checklist-value="user" /> {{user.email}}
 						</li>
 					</ul>
 			    </accordion-group>

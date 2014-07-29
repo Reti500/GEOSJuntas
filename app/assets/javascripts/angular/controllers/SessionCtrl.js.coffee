@@ -5,7 +5,7 @@
 		$scope.session = new Session(params)
 		Session.create($scope.session, ($data) ->
 			if $data.state == "Logged"
-				$window.location.href = '/';
+				$window.location.href = '/eventos';
 			else
 				$scope.addAlert("danger", "Error en los datos")
 				$scope.session = angular.copy({})

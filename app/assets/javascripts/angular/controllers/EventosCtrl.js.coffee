@@ -92,20 +92,24 @@
 		$scope.ismeridian = false
 
 		$scope.selection = []
+		$scope.invitados = { invitado: [] }
 		
 		$scope.toggleMode = () ->
 			$scope.ismeridian = !$scope.ismeridian
 
 		$scope.crear = ($evento) ->
 			$scope.evento = new Evento($evento)
+			$scope.evento.invitados = $scope.invitados
+			$scope.evento.hora = $scope.evento.hora.getHours()
+			$scope.evento.dia = $scope.evento.fecha.getDate()
+			$scope.evento.mes = $scope.evento.fecha.getMonth()+1
 			# if not $scope.evento.hora
 			# 	$scope.evento.hora = $scope.dt
-			$log.info($evento.invitados)
-			$log.info($scope.evento)
-			# Evento.create($scope.evento, ($data) ->
-			# 	$log.info($data)
-			# 	$modalInstance.close($data.evento)
-			# )
+			
+			Evento.create($scope.evento, ($data) ->
+				$log.info($data)
+				$modalInstance.close($data.evento)
+			)
 
 		$scope.update = () ->
 	    	d = new Date()
