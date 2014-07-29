@@ -58,7 +58,7 @@
 		$scope.dialog_new = () ->
 			$scope.event_show = null
 			@modalInstance = $modal.open({
-				templateUrl: '../templates/eventos/new.html',
+				templateUrl: '../templates/events/new.html',
 				controller: 'ModalInstanceNewCtrl',
 				size: "lg",
 				resolve: {
