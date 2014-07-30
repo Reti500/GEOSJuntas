@@ -28,6 +28,7 @@ GEOSJuntas::Application.routes.draw do
     resources :sessions, only: [:create, :destroy]
     resources :eventos
     resources :comentarios
+    resources :notifications
   end
 
   root "home#index"

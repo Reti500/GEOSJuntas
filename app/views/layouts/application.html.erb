@@ -9,7 +9,7 @@
 </head>
 <body>
 
-	<nav class="navbar navbar-default" role="navigation" ng-controller="NotificationsCtrl">
+	<nav class="navbar navbar-default" role="navigation" ng-controller="NotificationsCtrl" ng-init="init()">
 	  <div class="container-fluid">
 	    <!-- Brand and toggle get grouped for better mobile display -->
 	    <div class="navbar-header">
@@ -32,13 +32,19 @@
 	      	<% if current_user %>
 		      	<li ng-click="dialog_new()" style="cursor: pointer;"><a>Nuevo evento  <span class="glyphicon glyphicon-plus"></span></a></li>
 		      	<li class="dropdown">
-		      		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-bell"></span> <span class="badge">{{notificaciones.length}}</span></a>
+		      		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-bell"></span> <span class="badge">{{num_notify}}</span></a>
 		         	<ul class="dropdown-menu" role="menu">
+		         		<li ng-repeat="n in notificaciones" ng-class="{'list-group-item-info': n.status=='pendiente'}">
+		         			<a>{{n.message}}</a>
+		         		</li>
 		          	</ul>
 		      	</li>
-
-	      	
-	        	<li><%= link_to 'Salir', :logout %></li>
+	        	<li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cuenta<span class="caret"></span></a>
+		          <ul class="dropdown-menu" role="menu">
+		          	<li><%= link_to 'Salir', :logout %></li>
+		          </ul>
+		        </li>
 	        <% else %>
 	        	<li><%= link_to 'Login', :login %></li>
 	        <% end %>

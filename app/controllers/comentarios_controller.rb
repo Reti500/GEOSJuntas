@@ -28,11 +28,20 @@ class ComentariosController < ApplicationController
   end
 
   def create
-    @comentario = Comentario.new(comentario_params)
+    @params = comentario_params
+    @comentario = Comentario.new(@params)
 
     if @comentario.save
       current_user.comentarios << @comentario
       
+      @e = Evento.find(@params['evento_id'])
+      @n = Notification.new(message: "El usuario #{current_user.email} comento el evento #{@e.titulo}",
+          action: "Ver comentario", notify_type: "comentario", status: "pendiente")
+
+      @e.users.each do |u|
+        u.notifications << @n
+      end
+
       respond_to do |format|
         format.html {}
         format.json { render json: @comentario }

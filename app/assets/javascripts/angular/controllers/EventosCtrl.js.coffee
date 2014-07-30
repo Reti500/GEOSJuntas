@@ -1,5 +1,5 @@
-@app.controller 'EventosCtrl', ['$scope', '$location', '$modal', '$log', '$http', 'Evento', 'User',
-	($scope, $location, $modal, $log, $http, Evento, User) ->
+@app.controller 'EventosCtrl', ['$scope', '$location', '$modal', '$log', '$http', 'Evento', 'User', '$routeParams'
+	($scope, $location, $modal, $log, $http, Evento, User, $routeParams) ->
 		$scope.eventos = []
 		$scope.lista_eventos = []
 		@modalInstance = null
@@ -13,8 +13,14 @@
 				$scope.create_list_eventos($scope.eventos)
 			)
 
+		$scope.show = () ->
+			$id = $location.url().split("/")[1]
+			Evento.show({id:$id}, ($data) ->
+				$scope.evento = $data.evento
+			)
+
 		$scope.editar = () ->
-			
+
 
 		$scope.create_list_eventos = ($array) ->
 			num_init = 0
@@ -92,20 +98,20 @@
 		$scope.ismeridian = false
 
 		$scope.selection = []
-		$scope.invitados = { invitado: [] }
+		$scope.invitados = { invitado: ['user'] }
 		
 		$scope.toggleMode = () ->
 			$scope.ismeridian = !$scope.ismeridian
 
 		$scope.crear = ($evento) ->
 			$scope.evento = new Evento($evento)
-			$scope.evento.invitados = $scope.invitados
+			$scope.evento.invitados = $scope.selection
 			$scope.evento.hora = $scope.evento.hora.getHours()
 			$scope.evento.dia = $scope.evento.fecha.getDate()
 			$scope.evento.mes = $scope.evento.fecha.getMonth()+1
 			# if not $scope.evento.hora
 			# 	$scope.evento.hora = $scope.dt
-			
+		
 			Evento.create($scope.evento, ($data) ->
 				$log.info($data)
 				$modalInstance.close($data.evento)

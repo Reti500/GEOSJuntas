@@ -11,12 +11,7 @@ class EventosController < ApplicationController
     if @day && @month
       day = DateTime.new(@year, @month.to_i, @day.to_i)
       @new_e = Evento.where('fecha BETWEEN ? AND ?', day, day+1.days)
-      # unless @new_e.length > 0
-      #   @eventos = @new_e
-      # end
-      # if @new_e.length > 0
         @eventos = @new_e
-      # end
     else
       @eventos = current_user.eventos
     end
@@ -55,48 +50,32 @@ class EventosController < ApplicationController
     @current_day_all = DateTime.new(@year, @month.to_i, @day.to_i, @params['hora'])
     @message = ""
 
-    puts @invitados
-
-    # @hora_del_evento = @params['hora'].to_datetime.strftime("%H:%M")
-    #@hora_del_evento = DateTime.new(@year, @month.to_i, @day.to_i, @params['hora'])
-    #puts "->> HORA -> #{@hora_del_evento}"
-
     @params['fecha'] = @current_day_all
-    #@evento = Evento.new(@params)
 
     @e = Evento.where('fecha BETWEEN ? AND ?', @current_day, @current_day_all).order('hora').first || nil
 
     if @e
       if (@e.fecha + @e.duracion.to_i.hours) <= @current_day_all
-        puts "--> SI SE PUEDE #{(@e.fecha + @e.duracion.to_i.hours)} <= #{@current_day_all}"
         @evento = Evento.new(@params)
       else
-        puts "--> NO SE PUEDE #{(@e.fecha + @e.duracion.to_i.hours)} <= #{@current_day_all}"
+        message = "--> NO SE PUEDE #{(@e.fecha + @e.duracion.to_i.hours)} <= #{@current_day_all}"
       end
     else
       @evento = Evento.new(@params)
-      puts "->>>>>>>>>>>>>>> Error"
     end
-    # @e = Evento.where('fecha BETWEEN ? AND ?', @current_day, (@current_day+@hora_del_evento.strftime("%H:%M").to_i.hours)).order('hora').first || nil
-    # puts @e
-    # if @e
-    #   if (@e.hora + @e.duracion.to_i.hours).strftime("%H:%M") <= @hora_del_evento.to_s
-    #     puts "Hora #{@e.hora.strftime("%H:%M")} + #{@e.duracion.to_i.hours} == #{(@e.hora + @e.duracion.to_i.hours).strftime("%H:%M")} <= #{@hora_del_evento}"
-    #     @evento = Evento.new(evento_params)
-    #   else
-    #     puts "Hora #{@hora_del_evento.to_s} <<-->> #{@e.hora.strftime("%H:%M")} + #{@e.duracion.to_i.hours}"
-    #     @message = "Error en la hora"
-    #   end
-    # else
-    #   puts "No se encontro nada"
-    #   @evento = Evento.new(evento_params)
-    # end
 
     if @evento
       current_user.eventos << @evento
 
+      @n = Notification.new(message: "El usuario #{current_user.email} te invito al el evento #{@evento.titulo}",
+          action: "Ver comentario", notify_type: "comentario", status: "pendiente")
+
       for i in @invitados
-        puts i
+        u = User.find_by(email: i)
+        if u
+          u.eventos << @evento
+          u.notifications << @n
+        end
       end
 
       respond_to do |format|

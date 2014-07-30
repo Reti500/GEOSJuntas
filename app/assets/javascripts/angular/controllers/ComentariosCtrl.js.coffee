@@ -7,7 +7,6 @@
 		$scope.evento_id = $event_id
 
 		Comentario.index({evento_id: $event_id}, ($data) ->
-			$log.info($data)
 			$scope.comentarios = $data.comentarios
 		)
 
